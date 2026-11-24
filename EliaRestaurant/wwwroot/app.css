@@ -1,0 +1,399 @@
+/* ====================================== */
+/* ОБЩЕЕ ОФОРМЛЕНИЕ САЙТА                 */
+/* ====================================== */
+
+/* Убираем стандартные отступы страницы */
+body {
+    margin: 0;
+    background-color: #f5f1e9;
+    font-family: Arial, sans-serif;
+    color: #243e33;
+}
+
+/* Учитываем отступы и рамки в размерах элементов */
+* {
+    box-sizing: border-box;
+}
+
+/* Оформление заголовков */
+h1, h2, h3 {
+    font-family: Georgia, serif;
+}
+
+/* ====================================== */
+/* ГЛАВНАЯ СТРАНИЦА                       */
+/* ====================================== */
+
+/* Приветственный блок с фотографией ресторана */
+.welcome {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/restaurant.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 550px;
+    padding: 80px 20px;
+    color: white;
+    text-align: center;
+    /* Располагаем содержимое по центру */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    /* Главный приветственный заголовок */
+    .welcome h1 {
+        font-size: 52px;
+        margin: 20px 0;
+        color: #ffffff;
+    }
+
+/* Маленькая надпись над заголовком */
+.subtitle {
+    color: #e8d2a6;
+    letter-spacing: 4px;
+    font-size: 14px;
+}
+
+/* Описание ресторана */
+.welcome p {
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+/* Информация под фотографией */
+.restaurant-info {
+    background-color: #f5f1e9;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+    /* Заголовки информационного блока */
+    .restaurant-info h2,
+    .restaurant-info h3 {
+        color: #243e33;
+        margin: 15px 0;
+    }
+
+/* ====================================== */
+/* ОФОРМЛЕНИЕ КНОПОК                      */
+/* ====================================== */
+
+/* Основная кнопка сайта */
+.main-button {
+    display: inline-block;
+    background-color: #243e33;
+    color: white;
+    border: 1px solid #c3ad87;
+    border-radius: 8px;
+    padding: 14px 28px;
+    margin-top: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    /* Изменение цвета при наведении */
+    .main-button:hover {
+        background-color: #3d5c4c;
+        color: white;
+    }
+
+/* Обычные кнопки */
+button {
+    background-color: #243e33;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+    /* Наведение на обычную кнопку */
+    button:hover {
+        background-color: #3d5c4c;
+    }
+
+    /* Оформление недоступных кнопок */
+    button:disabled {
+        background-color: #b8b8b8;
+        cursor: not-allowed;
+    }
+
+/* ====================================== */
+/* СТРАНИЦА БРОНИРОВАНИЯ                  */
+/* ====================================== */
+
+/* Размытая фотография на весь фон страницы */
+.booking-page {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/restaurant-blur.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 40px 6%;
+}
+
+    /* Главный заголовок страницы бронирования */
+    .booking-page > h1 {
+        color: white;
+        font-size: 42px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    /* Описание под главным заголовком */
+    .booking-page > p {
+        color: #f5f1e9;
+        text-align: center;
+    }
+
+    /* Заголовок выбора столиков */
+    .booking-page > h2 {
+        color: white;
+        text-align: center;
+        margin: 35px 0 20px;
+    }
+
+/* Общий стиль блоков бронирования */
+.booking-details,
+.client-details,
+.booking-list {
+    background-color: #f8f5ee;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 25px auto;
+    max-width: 1100px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+    /* Заголовки внутри блоков */
+    .booking-details h2,
+    .client-details h2,
+    .booking-list h2 {
+        color: #243e33;
+        margin-bottom: 20px;
+    }
+
+/* ====================================== */
+/* ПОЛЯ ВВОДА                             */
+/* ====================================== */
+
+/* Подписи над полями */
+label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: bold;
+}
+
+/* Оформление полей и выпадающих списков */
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #c3ad87;
+    border-radius: 8px;
+    background-color: white;
+    color: #243e33;
+    font-size: 16px;
+}
+
+    /* Выделение активного поля */
+    input:focus,
+    select:focus {
+        outline: 2px solid #c3ad87;
+    }
+
+/* ====================================== */
+/* КАРТОЧКИ СТОЛИКОВ                      */
+/* ====================================== */
+
+/* Располагаем столики в три колонки */
+.tables {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Оформление отдельного столика */
+.table-card {
+    background-color: #f8f5ee;
+    border: 2px solid #c3ad87;
+    border-radius: 12px;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+    /* Название столика */
+    .table-card h3 {
+        font-size: 24px;
+        color: #243e33;
+    }
+
+/* Цвет статуса свободного столика */
+.free {
+    color: #43865b;
+    font-weight: bold;
+}
+
+/* Цвет статуса недоступного столика */
+.busy {
+    color: #a34c40;
+    font-weight: bold;
+}
+
+/* Информация о выбранном столике */
+.booking-page .selected-table {
+    background-color: #e2ece2;
+    color: #243e33;
+    border-radius: 8px;
+    padding: 15px;
+    max-width: 1100px;
+    margin: 20px auto;
+    font-weight: bold;
+}
+
+/* ====================================== */
+/* УВЕДОМЛЕНИЯ                            */
+/* ====================================== */
+
+/* Блок сообщения пользователю */
+.notification {
+    background-color: #f8f5ee;
+    border-left: 5px solid #c3ad87;
+    border-radius: 8px;
+    padding: 18px;
+    margin: 20px auto;
+    max-width: 1100px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* ====================================== */
+/* ТАБЛИЦА БРОНИРОВАНИЙ                   */
+/* ====================================== */
+
+/* Возможность прокручивать широкую таблицу */
+.booking-list {
+    overflow-x: auto;
+}
+
+/* Общий вид таблицы */
+.booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+    /* Заголовки таблицы */
+    .booking-table th {
+        background-color: #243e33;
+        color: white;
+        padding: 12px;
+    }
+
+    /* Ячейки таблицы */
+    .booking-table td {
+        padding: 12px;
+        border-bottom: 1px solid #d8cdbb;
+        text-align: center;
+    }
+
+    /* Выделение каждой второй строки */
+    .booking-table tr:nth-child(even) {
+        background-color: #eee9df;
+    }
+
+/* Кнопка отмены бронирования */
+.cancel-button {
+    background-color: #a34c40;
+    padding: 8px 12px;
+}
+
+    /* Наведение на кнопку отмены */
+    .cancel-button:hover {
+        background-color: #84382e;
+    }
+
+/* Ссылка для возвращения на главную */
+.booking-page > a {
+    display: block;
+    color: #e8d2a6;
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* ====================================== */
+/* ОФОРМЛЕНИЕ ДЛЯ НЕБОЛЬШИХ ЭКРАНОВ       */
+/* ====================================== */
+
+@media (max-width: 700px) {
+
+    /* На небольшом экране столики в две колонки */
+    .tables {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Уменьшаем размеры заголовков */
+    .welcome h1,
+    .booking-page > h1 {
+        font-size: 32px;
+    }
+
+    /* Уменьшаем отступы страницы */
+    .booking-page {
+        padding: 25px 15px;
+    }
+}
+/* ====================================== */
+/* ДОПОЛНИТЕЛЬНОЕ ОФОРМЛЕНИЕ СТОЛИКОВ     */
+/* ====================================== */
+
+/* Выбранный столик */
+.table-card.selected {
+    background-color: #dce9dc;
+    border-color: #43865b;
+}
+
+    /* Кнопка выбранного столика */
+    .table-card.selected button {
+        background-color: #43865b;
+    }
+
+/* Занятый столик */
+.table-card.occupied {
+    background-color: #f1dfda;
+    border-color: #b9796d;
+}
+
+/* Столик, который не подходит по вместимости */
+.table-card.unavailable {
+    background-color: #e9e7e2;
+    border-color: #b8b8b8;
+}
+
+/* ====================================== */
+/* ЦВЕТА УВЕДОМЛЕНИЙ                      */
+/* ====================================== */
+
+/* Успешное бронирование */
+.notification.success {
+    background-color: #e2ece2;
+    color: #386646;
+    border-left-color: #43865b;
+}
+
+/* Сообщение об ошибке */
+.notification.error {
+    background-color: #f4e4e0;
+    color: #a34c40;
+    border-left-color: #a34c40;
+}
+
+/* Отмена бронирования */
+.notification.cancelled {
+    background-color: #f5ead3;
+    color: #85652e;
+    border-left-color: #c3ad87;
+}

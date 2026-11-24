@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+
+@* Общая структура сайта ресторана *@
+<div class="site">
+
+    @* Верхняя панель сайта *@
+    <header class="header">
+
+        @* Название ресторана *@
+        <a href="/" class="logo">
+            ÉLIA
+            <span>RESTAURANT</span>
+        </a>
+
+        @* Меню навигации *@
+        <nav class="navigation">
+            <a href="/">Главная</a>
+            <a href="/booking">Бронирование</a>
+        </nav>
+
+    </header>
+
+    @* Содержимое выбранной страницы *@
+    <main>
+        @Body
+    </main>
+
+    @* Нижняя панель сайта *@
+    <footer class="footer">
+        <h3>ÉLIA Restaurant</h3>
+        <p>Ежедневно с 12:00 до 22:00</p>
+        <p>© 2026 ÉLIA</p>
+    </footer>
+
+</div>
+
+@* Сообщение при возникновении ошибки *@
+<div id="blazor-error-ui">
+    Произошла ошибка.
+    <a href="" class="reload">Обновить страницу</a>
+    <a class="dismiss">✕</a>
+</div>

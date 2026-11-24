@@ -1,0 +1,86 @@
+/* Общая структура сайта */
+.site {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Верхняя панель сайта */
+.header {
+    background-color: #243e33;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Название ресторана */
+.logo {
+    color: #e8d2a6;
+    font-family: Georgia, serif;
+    font-size: 36px;
+    letter-spacing: 5px;
+    text-decoration: none;
+}
+
+    /* Маленькая надпись под названием */
+    .logo span {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 4px;
+        text-align: center;
+    }
+
+/* Меню навигации */
+.navigation {
+    display: flex;
+    gap: 25px;
+}
+
+    /* Ссылки в меню */
+    .navigation a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+        /* Цвет ссылки при наведении мышки */
+        .navigation a:hover {
+            color: #e8d2a6;
+        }
+
+/* Основное содержимое сайта */
+main {
+    flex: 1;
+}
+
+/* Нижняя панель сайта */
+.footer {
+    background-color: #243e33;
+    color: #e8d2a6;
+    text-align: center;
+    padding: 25px;
+}
+
+    /* Оформление текста нижней панели */
+    .footer p {
+        font-size: 14px;
+        margin: 5px;
+    }
+
+/* Скрываем сообщение об ошибке до её возникновения */
+#blazor-error-ui {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff3cd;
+    padding: 15px;
+    z-index: 1000;
+}
+
+/* Кнопка закрытия сообщения об ошибке */
+.dismiss {
+    float: right;
+    cursor: pointer;
+}

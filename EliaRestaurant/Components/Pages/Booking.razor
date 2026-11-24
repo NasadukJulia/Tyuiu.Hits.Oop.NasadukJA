@@ -1,0 +1,303 @@
+﻿@page "/booking"
+
+@* Подключаем наши классы и сервис *@
+@using EliaRestaurant.Models
+@using EliaRestaurant.Services
+@inject BookingService Service
+
+@* Название вкладки браузера *@
+<PageTitle>Бронирование — ÉLIA</PageTitle>
+
+<div class="booking-page">
+
+    @* Заголовок страницы *@
+    <h1>Ваш столик уже ждёт вас</h1>
+
+    <p>Выберите удобное время и подходящий столик.</p>
+
+    @* Блок выбора даты, времени и количества гостей *@
+    <div class="booking-details">
+
+        <h2>Детали бронирования</h2>
+
+        <label>Дата посещения</label>
+        <input type="date" @bind="date" />
+
+        <label>Время посещения</label>
+        <select @bind="time">
+            <option value="12:00">12:00</option>
+            <option value="14:00">14:00</option>
+            <option value="16:00">16:00</option>
+            <option value="18:00">18:00</option>
+            <option value="20:00">20:00</option>
+        </select>
+
+        <label>Количество гостей</label>
+        <input type="number" min="1" max="8"
+               @bind="guests" />
+
+    </div>
+
+    @* Отображение столиков ресторана *@
+    <h2>Выберите столик</h2>
+
+    <div class="tables">
+
+        @foreach (RestaurantTable table in Service.Tables)
+        {
+            // Проверяем доступность столика
+            bool available = Service.IsAvailable(
+            table.Id, date, time);
+
+            <div class="@GetTableClass(table)">
+
+                <h3>Столик №@table.Id</h3>
+
+                <p>Количество мест: @table.Seats</p>
+
+                @* Отображаем статус столика *@
+                @if (available == false)
+                {
+                    <p class="busy">Занят</p>
+
+                    <button disabled>Недоступен</button>
+                }
+                else if (guests > table.Seats)
+                {
+                    <p class="busy">Недостаточно мест</p>
+
+                    <button disabled>Недоступен</button>
+                }
+                else
+                {
+                    <p class="free">Свободен</p>
+
+                    <button @onclick="() => SelectTable(table)">
+
+                        @* Показываем, какой столик выбран *@
+                        @if (selectedTable == table)
+                        {
+                            <span>Выбран ✓</span>
+                        }
+                        else
+                        {
+                            <span>Выбрать</span>
+                        }
+
+                    </button>
+                }
+
+            </div>
+        }
+
+    </div>
+
+    @* Показываем выбранный пользователем столик *@
+    @if (selectedTable != null)
+    {
+        <p class="selected-table">
+            Выбран столик №@selectedTable.Id
+        </p>
+    }
+
+    @* Поля для ввода данных клиента *@
+    <div class="client-details">
+
+        <h2>Ваши данные</h2>
+
+        <label>Имя</label>
+        <input type="text"
+               placeholder="Введите ваше имя"
+               @bind="name" />
+
+        <label>Номер телефона</label>
+        <input type="tel"
+               placeholder="Введите номер телефона"
+               @bind="phone" />
+
+        @* Кнопка создания бронирования *@
+        <button class="main-button"
+                @onclick="CreateBooking">
+            Забронировать столик
+        </button>
+
+    </div>
+
+    @* Вывод уведомлений пользователю *@
+    @if (message != "")
+    {
+        <div class="@GetNotificationClass()">
+            @message
+        </div>
+    }
+
+    @* Список созданных бронирований *@
+    <div class="booking-list">
+
+        <h2>Ваши бронирования</h2>
+
+        @if (Service.Bookings.Count == 0)
+        {
+            <p>Бронирований пока нет.</p>
+        }
+        else
+        {
+            <table class="booking-table">
+
+                @* Заголовки таблицы *@
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Клиент</th>
+                        <th>Телефон</th>
+                        <th>Столик</th>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Гости</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+
+                @* Данные всех бронирований *@
+                <tbody>
+
+                    @foreach (var booking in Service.Bookings)
+                    {
+                        <tr>
+                            <td>@booking.Id</td>
+                            <td>@booking.Client.Name</td>
+                            <td>@booking.Client.Phone</td>
+                            <td>@booking.Table.Id</td>
+                            <td>@booking.Date.ToString("dd.MM.yyyy")</td>
+                            <td>@booking.Time</td>
+                            <td>@booking.Guests</td>
+                            <td>@booking.GetStatus()</td>
+
+                            <td>
+                                @if (booking.IsCancelled == false)
+                                {
+                                    <button class="cancel-button"
+                                            @onclick="() => CancelBooking(booking.Id)">
+                                        Отменить
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span>—</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+
+    </div>
+
+    @* Возвращение на главную страницу *@
+    <a href="/">Вернуться на главную</a>
+
+</div>
+
+@code {
+    // Данные, которые пользователь выбирает на сайте
+    private DateTime date = DateTime.Today.AddDays(1);
+    private string time = "18:00";
+    private int guests = 2;
+
+    // Данные клиента
+    private string name = "";
+    private string phone = "";
+
+    // Выбранный столик
+    // Изначально столик не выбран
+    private RestaurantTable? selectedTable = null;
+
+    // Текст уведомления
+    private string message = "";
+
+    // Метод выбора столика
+    private void SelectTable(RestaurantTable table)
+    {
+        selectedTable = table;
+
+        // Убираем предыдущее уведомление
+        message = "";
+    }
+
+    // Метод создания бронирования
+    private void CreateBooking()
+    {
+        // Проверяем, выбран ли столик
+        if (selectedTable == null)
+        {
+            message = "Сначала выберите столик!";
+            return;
+        }
+
+        // Передаём данные в сервис бронирования
+        message = Service.AddBooking(
+            selectedTable, name, phone,
+            date, time, guests);
+
+        // После успешного бронирования очищаем поля
+        if (message == "Столик успешно забронирован!")
+        {
+            selectedTable = null;
+            name = "";
+            phone = "";
+        }
+    }
+
+    // Метод отмены бронирования
+    private void CancelBooking(int id)
+    {
+        // Вызываем метод отмены из нашего сервиса
+        message = Service.CancelBooking(id);
+    }
+    // Метод для определения оформления карточки столика
+    private string GetTableClass(RestaurantTable table)
+    {
+        // Если столик занят, используем красное оформление
+        if (Service.IsAvailable(table.Id, date, time) == false)
+        {
+            return "table-card occupied";
+        }
+
+        // Если мест недостаточно, используем серое оформление
+        if (guests > table.Seats)
+        {
+            return "table-card unavailable";
+        }
+
+        // Если пользователь выбрал этот столик
+        if (selectedTable == table)
+        {
+            return "table-card selected";
+        }
+
+        // Обычное оформление свободного столика
+        return "table-card";
+    }
+    // Метод для выбора цвета уведомления
+    private string GetNotificationClass()
+    {
+        // Успешное бронирование
+        if (message == "Столик успешно забронирован!")
+        {
+            return "notification success";
+        }
+
+        // Отмена бронирования
+        if (message == "Бронирование отменено!")
+        {
+            return "notification cancelled";
+        }
+
+        // Сообщение об ошибке
+        return "notification error";
+    }
+}
